@@ -1,4 +1,6 @@
 
+import os
+
 from fastapi import FastAPI, HTTPException, UploadFile, File
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field 
@@ -17,13 +19,34 @@ app = FastAPI(
     version="0.1.0"
 )
 
+# Configure exact allowed frontend origins using CORS_ORIGINS on Render.
+# Example: CORS_ORIGINS=https://your-frontend.onrender.com
+DEFAULT_CORS_ORIGINS = (
+    "http://localhost:5173,http://127.0.0.1:5173,"
+    "http://localhost:8080,http://127.0.0.1:8080"
+)
+allowed_origins = [
+    origin.strip().rstrip("/")
+    for origin in os.getenv("CORS_ORIGINS", DEFAULT_CORS_ORIGINS).split(",")
+    if origin.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:5173"],
+    allow_origins=allowed_origins,
     allow_credentials=False,
     allow_methods=["GET", "POST"],
-    allow_headers=["*"]
+    allow_headers=["Content-Type", "Authorization"],
 )
+
+
+def current_model() -> str:
+    """Return the actual model configured for the selected AI provider."""
+    provider = os.getenv("AI_PROVIDER", "ollama").strip().lower()
+    if provider == "groq":
+        return os.getenv("GROQ_MODEL", "openai/gpt-oss-120b")
+    return os.getenv("OLLAMA_MODEL", "qwen2.5:3b")
+
 
 
 @app.get("/")
@@ -176,7 +199,7 @@ def chat(request: ChatRequest):
 
         return {
             "reply": answer,
-            "model": "local-ollama",
+            "model": current_model(),
             "basis": "abstract" if (request.paper_context or request.paper_contexts) else "general",
             "sources": (
                 [dict(source, label=f"[{i}] {source['label']}")
@@ -190,12 +213,10 @@ def chat(request: ChatRequest):
     except requests.exceptions.RequestException:
         raise HTTPException(
             status_code=503,
-            detail=(
-                "AI model unavailable. "
-                "Make sure Ollama is running "
-                "and the model is downloaded."
-            )
+            detail="AI provider is unavailable or the model request failed."
         )
+    except (RuntimeError, ValueError, KeyError) as exc:
+        raise HTTPException(status_code=502, detail="AI provider configuration or response is invalid.") from exc
 
 
 
@@ -233,11 +254,11 @@ def summarize_paper(request: SummarizeRequest):
     try:
         summary = ask_llm([{"role": "user", "content": instruction}])
     except requests.exceptions.RequestException as exc:
-        raise HTTPException(status_code=503, detail="Ollama is unavailable or the model request failed.") from exc
-    except ValueError as exc:
-        raise HTTPException(status_code=502, detail="The AI model returned an invalid response.") from exc
+        raise HTTPException(status_code=503, detail="AI provider is unavailable or the model request failed.") from exc
+    except (ValueError, RuntimeError, KeyError) as exc:
+        raise HTTPException(status_code=502, detail="AI provider configuration or response is invalid.") from exc
 
-    return {"summary": summary, "model": "local-ollama", "basis": "abstract"}
+    return {"summary": summary, "model": current_model(), "basis": "abstract"}
 
 
 class ReportRequest(BaseModel):
@@ -274,12 +295,12 @@ def generate_research_report(request: ReportRequest):
     try:
         report = ask_llm([{"role": "user", "content": prompt}])
     except requests.exceptions.RequestException as exc:
-        raise HTTPException(status_code=503, detail="Ollama is unavailable or the model request failed.") from exc
-    except ValueError as exc:
-        raise HTTPException(status_code=502, detail="The AI model returned an invalid response.") from exc
+        raise HTTPException(status_code=503, detail="AI provider is unavailable or the model request failed.") from exc
+    except (ValueError, RuntimeError, KeyError) as exc:
+        raise HTTPException(status_code=502, detail="AI provider configuration or response is invalid.") from exc
     return {
         "report": report,
-        "model": "local-ollama",
+        "model": current_model(),
         "basis": "abstract",
         "sources": [
             {"paper": index, "title": paper.title, "links": verified_paper_sources(paper)}
@@ -414,12 +435,12 @@ def ask_about_pdf(request: PDFQuestionRequest):
     try:
         answer = ask_llm([{"role": "user", "content": prompt}])
     except requests.exceptions.RequestException as exc:
-        raise HTTPException(status_code=503, detail="Ollama is unavailable or the model request failed.") from exc
-    except ValueError as exc:
-        raise HTTPException(status_code=502, detail="The AI model returned an invalid response.") from exc
+        raise HTTPException(status_code=503, detail="AI provider is unavailable or the model request failed.") from exc
+    except (ValueError, RuntimeError, KeyError) as exc:
+        raise HTTPException(status_code=502, detail="AI provider configuration or response is invalid.") from exc
     return {
         "answer": answer,
-        "model": "local-ollama",
+        "model": current_model(),
         "basis": "retrieved_pdf_excerpts",
         "pages_used": sorted({part["page"] for part in passages}),
     }
