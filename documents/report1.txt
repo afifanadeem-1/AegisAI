@@ -1,0 +1,8 @@
+Report 1: AI Tutoring
+
+In a fictional pilot study, 40 students used an AI
+tutoring tool for four weeks. Their average practice
+test score increased from 62 to 74.
+
+This example is synthetic and does not establish
+that AI tutoring caused the improvement.

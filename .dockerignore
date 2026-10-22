@@ -1,0 +1,12 @@
+.git
+.venv
+venv
+__pycache__
+.pytest_cache
+*.pyc
+*.pdf
+.env
+.env.*
+node_modules
+frontend
+.DS_Store

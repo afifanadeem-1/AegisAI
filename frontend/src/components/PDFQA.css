@@ -1,0 +1,13 @@
+/* Add to the bottom of PDFUpload.css */
+.aegis-pdf-upload .pdf-qa { margin-top: 20px; padding: 18px; border: 1px solid var(--pdf-border, #334155); border-radius: 12px; background: rgba(148,163,184,.035); }
+.aegis-pdf-upload .pdf-qa h3 { margin: 0 0 6px; font-size: 1rem; }
+.aegis-pdf-upload .pdf-qa > p { margin: 0 0 16px; font-size: .85rem; }
+.aegis-pdf-upload .pdf-qa-form { display: flex; align-items: flex-end; gap: 10px; flex-wrap: wrap; }
+.aegis-pdf-upload .pdf-qa-form textarea { flex: 1 1 270px; min-height: 68px; min-width: 0; box-sizing: border-box; resize: vertical; padding: 12px; border-radius: 10px; border: 1px solid var(--pdf-border, #334155); background: rgba(15,23,42,.28); color: var(--pdf-text, #e2e8f0); font: inherit; }
+.aegis-pdf-upload .pdf-qa-form textarea:focus-visible { outline: 2px solid #22d3ee; outline-offset: 2px; }
+.aegis-pdf-upload .pdf-qa-answer { margin-bottom: 12px; padding: 14px; border: 1px solid var(--pdf-border, #334155); border-radius: 10px; overflow-wrap: anywhere; }
+.aegis-pdf-upload .pdf-qa-answer strong { display: block; font-size: .9rem; }
+.aegis-pdf-upload .pdf-qa-response { white-space: pre-wrap; margin: 10px 0; color: var(--pdf-text, #e2e8f0); }
+.aegis-pdf-upload .pdf-qa-answer small { color: var(--pdf-muted, #94a3b8); }
+.aegis-pdf-upload .pdf-upload-preview summary { cursor: pointer; margin: 12px 0; font-weight: 600; }
+[data-theme="light"] .aegis-pdf-upload .pdf-qa-form textarea { background: #fff; color: #0f172a; }

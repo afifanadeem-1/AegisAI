@@ -1,0 +1,8 @@
+Report 2: Student Feedback
+
+In a fictional survey of 30 students, 21 reported
+that immediate feedback helped them understand
+difficult concepts.
+
+The survey is synthetic and should not be treated
+as real-world research evidence.

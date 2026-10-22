@@ -1,0 +1,7 @@
+Report 3: Technology Costs
+
+A fictional university estimated that its AI
+tutoring system would cost 5000 dollars per year
+to operate.
+
+This is a synthetic estimate for software testing.

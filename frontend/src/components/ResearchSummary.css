@@ -1,0 +1,18 @@
+/* Lesson 31: AI Research Summary — isolated styles, theme-friendly */
+.aegis-summary-section { display: flex; flex-direction: column; gap: 12px; }
+.aegis-summary-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; }
+.aegis-summary-heading h3 { margin: 0; }
+.aegis-summary-label { font-size: 0.78rem; font-weight: 600; color: inherit; opacity: 0.75; }
+.aegis-summary-description { margin: 0; line-height: 1.6; opacity: 0.82; }
+.aegis-summary-result { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.75; padding: 16px; border-radius: 12px; border: 1px solid currentColor; border-color: color-mix(in srgb, currentColor 17%, transparent); background: color-mix(in srgb, currentColor 5%, transparent); color: inherit; }
+.aegis-summary-notice, .aegis-summary-error, .aegis-summary-loading { display: flex; align-items: flex-start; gap: 9px; margin: 0; line-height: 1.5; }
+.aegis-summary-notice svg, .aegis-summary-error svg, .aegis-summary-loading svg { flex-shrink: 0; margin-top: 3px; }
+.aegis-summary-error { color: #c43d3d; }
+:root[data-theme="dark"] .aegis-summary-error { color: #ff9999; }
+.aegis-summary-button { display: inline-flex; align-items: center; justify-content: center; gap: 8px; align-self: flex-start; padding: 10px 15px; border: 1px solid currentColor; border-radius: 9px; background: transparent; color: inherit; font: inherit; font-weight: 600; cursor: pointer; }
+.aegis-summary-button:hover:not(:disabled) { background: color-mix(in srgb, currentColor 9%, transparent); }
+.aegis-summary-button:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+.aegis-summary-button:disabled { opacity: 0.6; cursor: wait; }
+.aegis-summary-spinner { animation: aegis-summary-spin 1.2s linear infinite; }
+@keyframes aegis-summary-spin { to { transform: rotate(360deg); } }
+@media (max-width: 600px) { .aegis-summary-button { width: 100%; } }

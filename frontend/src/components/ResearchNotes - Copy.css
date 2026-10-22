@@ -1,0 +1,19 @@
+/* Lesson 29 — scoped styles. Do not replace your Lesson 28 contrast fix. */
+.paper-details-dialog .paper-notes-section { border-top: 1px solid rgba(148,163,184,.24); margin-top: 22px; }
+.paper-details-dialog .paper-notes-heading { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 16px; }
+.paper-details-dialog .paper-notes-heading h3 { margin: 0; }
+.paper-details-dialog .paper-notes-status { color: #c4b5fd; font-size: 12px; font-weight: 600; }
+.paper-details-dialog .paper-notes-label { display: block; margin: 12px 0 8px; color: #d5dcec; font-size: 13px; }
+.paper-details-dialog .paper-notes-editor { display: block; width: 100%; min-height: 142px; resize: vertical; box-sizing: border-box; padding: 13px 14px; border: 1px solid #64748b; border-radius: 12px; background: #101625; color: #f4f6ff; font: inherit; font-size: 14px; line-height: 1.6; }
+.paper-details-dialog .paper-notes-editor::placeholder { color: #a8b4c7; opacity: 1; }
+.paper-details-dialog .paper-notes-editor:focus-visible { outline: 2px solid #a78bfa; outline-offset: 2px; }
+.paper-details-dialog .paper-notes-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 8px; font-size: 12px; color: #cbd5e1; }
+.paper-details-dialog .paper-notes-delete { display: inline-flex; gap: 6px; align-items: center; border: 1px solid #fb7185; background: transparent; color: #fda4af; border-radius: 8px; padding: 7px 10px; cursor: pointer; font: inherit; }
+.paper-details-dialog .paper-notes-confirm { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 12px; padding: 12px; border-radius: 10px; border: 1px solid #fb7185; color: inherit; background: rgba(244,63,94,.09); font-size: 13px; }
+.paper-details-dialog .paper-notes-confirm button { border: 1px solid currentColor; background: transparent; color: inherit; border-radius: 7px; padding: 6px 10px; cursor: pointer; }
+:root[data-theme="light"] .paper-details-dialog .paper-notes-label { color: #334155; }
+:root[data-theme="light"] .paper-details-dialog .paper-notes-status { color: #6d28d9; }
+:root[data-theme="light"] .paper-details-dialog .paper-notes-editor { background: #f8fafc; color: #172033; border-color: #94a3b8; }
+:root[data-theme="light"] .paper-details-dialog .paper-notes-editor::placeholder { color: #64748b; }
+:root[data-theme="light"] .paper-details-dialog .paper-notes-bottom { color: #475569; }
+:root[data-theme="light"] .paper-details-dialog .paper-notes-delete { color: #be123c; border-color: #be123c; }
