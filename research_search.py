@@ -1,4 +1,5 @@
 
+import os
 import requests
 
 
@@ -7,7 +8,6 @@ def reconstruct_abstract(inverted_index):
     Convert OpenAlex's abstract inverted index
     into readable text.
     """
-
     if not inverted_index:
         return None
 
@@ -34,11 +34,17 @@ def search_research(topic, limit=5):
         "per_page": limit,
     }
 
+    # Read the API key from an environment variable
+    api_key = os.getenv("OPENALEX_API_KEY")
+
+    if api_key:
+        params["api_key"] = api_key
+
     try:
         response = requests.get(
             url,
             params=params,
-            timeout=15
+            timeout=20
         )
 
         response.raise_for_status()
@@ -90,8 +96,13 @@ def search_research(topic, limit=5):
         return papers
 
     except (requests.exceptions.RequestException, ValueError) as error:
-        print("Research search failed:", error)
-        return []
+        print(
+            f"OpenAlex request failed: {type(error).__name__}: {error}",
+            flush=True
+        )
+        raise RuntimeError(
+            "OpenAlex research service is unavailable"
+        ) from error
 
 
 if __name__ == "__main__":
